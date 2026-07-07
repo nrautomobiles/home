@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>N R Automobiles — Bullet Specialists, Chennai</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#111214;
+    --gunmetal:#23262b;
+    --gunmetal-2:#2f333a;
+    --chrome:#c9cfd6;
+    --chrome-dim:#8b929c;
+    --paper:#eeeae2;
+    --red:#9e2b32;
+    --red-bright:#c73a3a;
+    --amber:#f2b134;
+    --line:rgba(201,207,214,0.14);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--ink);
+    color:var(--paper);
+    font-family:'Work Sans', sans-serif;
+    line-height:1.5;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.display{
+    font-family:'Oswald', sans-serif;
+    text-transform:uppercase;
+    letter-spacing:0.02em;
+  }
+  .mono{font-family:'JetBrains Mono', monospace;}
+  a{color:inherit;}
+  img{max-width:100%; display:block;}
+  .wrap{max-width:1100px; margin:0 auto; padding:0 24px;}
+
+  /* subtle grain/texture */
+  body::before{
+    content:"";
+    position:fixed; inset:0;
+    pointer-events:none;
+    z-index:2;
+    opacity:0.035;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* ---------- NAV ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(17,18,20,0.88);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px 24px; max-width:1100px; margin:0 auto;
+  }
+  .logo{
+    font-family:'Oswald', sans-serif;
+    font-weight:700; font-size:28px;
+    letter-spacing:0.06em;
+    display:flex; align-items:center; gap:10px;
+  }
+  @media(max-width:760px){
+    .logo{font-size:22px;}
+  }
+  .logo .dot{color:var(--red-bright);}
+  nav ul{list-style:none; display:flex; gap:28px;}
+  nav a{
+    font-size:14px; text-transform:uppercase; letter-spacing:0.05em;
+    font-weight:600; color:var(--chrome-dim);
+    text-decoration:none; transition:color 0.2s;
+  }
+  nav a:hover{color:var(--paper);}
+  .nav-cta{
+    background:var(--red); color:#fff !important; padding:9px 18px;
+    border-radius:2px; font-size:13px !important;
+  }
+  .burger{display:none; background:none; border:none; color:var(--paper); font-size:24px;}
+
+  @media(max-width:760px){
+    nav ul{
+      position:fixed; top:60px; right:-100%; height:calc(100vh - 60px);
+      width:70%; background:var(--gunmetal); flex-direction:column;
+      padding:32px 24px; gap:24px; transition:right 0.3s ease;
+      border-left:1px solid var(--line);
+    }
+    nav ul.open{right:0;}
+    .burger{display:block;}
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    padding:110px 0 90px;
+    background:
+      radial-gradient(ellipse 900px 500px at 80% -10%, rgba(158,43,50,0.28), transparent),
+      linear-gradient(180deg, var(--ink), var(--gunmetal) 140%);
+    border-bottom:1px solid var(--line);
+    overflow:hidden;
+  }
+  .hero-grid{display:grid; grid-template-columns:1.1fr 0.9fr; gap:48px; align-items:center;}
+  @media(max-width:860px){.hero-grid{grid-template-columns:1fr;}}
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    font-size:12px; letter-spacing:0.12em; text-transform:uppercase;
+    color:var(--amber); font-weight:600; margin-bottom:18px;
+  }
+  .eyebrow::before{content:"●"; font-size:8px;}
+  .hero h1{
+    font-size:clamp(42px, 6.5vw, 78px);
+    line-height:0.98;
+    color:var(--paper);
+  }
+  .hero h1 span{color:var(--red-bright);}
+  .hero p.lede{
+    margin-top:22px; font-size:18px; color:var(--chrome);
+    max-width:480px; font-weight:400;
+  }
+  .hero-ctas{display:flex; gap:14px; margin-top:32px; flex-wrap:wrap;}
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:14px 26px; border-radius:2px;
+    font-weight:600; font-size:14px; text-transform:uppercase; letter-spacing:0.04em;
+    text-decoration:none; transition:transform 0.15s, background 0.15s;
+    border:1px solid transparent; cursor:pointer;
+  }
+  .btn-primary{background:var(--red-bright); color:#fff;}
+  .btn-primary:hover{background:var(--red); transform:translateY(-2px);}
+  .btn-ghost{border-color:var(--line); color:var(--paper);}
+  .btn-ghost:hover{border-color:var(--chrome-dim); transform:translateY(-2px);}
+
+  /* scroll reveal */
+  .reveal{
+    opacity:0;
+    transform:translateY(28px);
+    transition:opacity 0.7s ease, transform 0.7s ease;
+    will-change:opacity, transform;
+  }
+  .reveal.in-view{
+    opacity:1;
+    transform:translateY(0);
+  }
+  .reveal-delay-1{transition-delay:0.08s;}
+  .reveal-delay-2{transition-delay:0.16s;}
+  .reveal-delay-3{transition-delay:0.24s;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    .reveal,
+    .reveal.in-view{
+      opacity:1;
+      transform:none;
+      transition:none;
+      will-change:auto;
+    }
+    .btn,
+    .reviews-nav,
+    .social-pill{
+      transition:none;
+    }
+  }
+
+  .stat-strip{
+    display:flex; gap:0; margin-top:56px; border-top:1px solid var(--line);
+    flex-wrap:wrap;
+  }
+  .stat{
+    flex:1; min-width:130px; padding:20px 20px 0 0;
+  }
+  .stat b{
+    display:block; font-family:'Oswald'; font-size:34px; color:var(--paper);
+  }
+  .stat span{font-size:12px; color:var(--chrome-dim); text-transform:uppercase; letter-spacing:0.06em;}
+
+  /* hero visual: logo badge */
+  .dial-wrap{display:flex; justify-content:center; align-items:center;}
+  .dial{
+    width:100%; max-width:380px;
+    filter:drop-shadow(0 22px 40px rgba(0,0,0,0.35));
+  }
+  .dial-frame{
+    display:flex; align-items:center; justify-content:center;
+    width:min(100%, 380px);
+    aspect-ratio:1 / 1;
+    padding:18px;
+    border-radius:28px;
+    background:linear-gradient(180deg, rgba(35,38,43,0.92), rgba(17,18,20,0.92));
+    border:1px solid var(--line);
+    box-shadow:0 20px 50px rgba(0,0,0,0.28);
+    overflow:hidden;
+  }
+  .dial-frame img{
+    display:block;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:center center;
+    border-radius:22px;
+  }
+
+  /* ---------- SECTION HEADERS ---------- */
+  .kicker{
+    font-size:12px; letter-spacing:0.14em; text-transform:uppercase;
+    color:var(--red-bright); font-weight:700; margin-bottom:10px;
+  }
+  section{padding:88px 0;}
+  section h2{font-size:clamp(30px,4vw,46px); color:var(--paper); margin-bottom:18px;}
+
+  /* ---------- ABOUT ---------- */
+  .about{border-bottom:1px solid var(--line);}
+  .about-grid{display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:start;}
+  @media(max-width:860px){.about-grid{grid-template-columns:1fr;}}
+  .about p{color:var(--chrome); margin-bottom:16px; font-size:16px;}
+  .cardline{
+    border:1px solid var(--line); border-left:3px solid var(--red-bright);
+    padding:20px 22px; background:var(--gunmetal); margin-top:28px;
+  }
+  .cardline b{display:block; font-family:'Oswald'; font-size:16px; letter-spacing:0.02em; margin-bottom:6px;}
+  .cardline span{font-size:14px; color:var(--chrome-dim);}
+
+  /* ---------- SERVICES ---------- */
+  .services{background:var(--gunmetal); border-bottom:1px solid var(--line);}
+  .svc-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); margin-top:36px; border:1px solid var(--line);}
+  @media(max-width:760px){.svc-grid{grid-template-columns:1fr;}}
+  .svc{background:var(--ink); padding:32px 26px;}
+  .svc .num{font-family:'JetBrains Mono'; font-size:13px; color:var(--red-bright);}
+  .svc h3{font-size:20px; margin:14px 0 10px; color:var(--paper);}
+  .svc p{font-size:14.5px; color:var(--chrome-dim);}
+
+  /* ---------- PROCESS (real sequence) ---------- */
+  .process-list{margin-top:40px; display:flex; flex-direction:column;}
+  .proc-row{
+    display:grid; grid-template-columns:70px 1fr; gap:24px;
+    padding:26px 0; border-top:1px solid var(--line);
+  }
+  .proc-row:last-child{border-bottom:1px solid var(--line);}
+  .proc-row .step{font-family:'Oswald'; font-size:32px; color:var(--gunmetal-2); -webkit-text-stroke:1px var(--red-bright); color:transparent;}
+  .proc-row h3{font-size:18px; color:var(--paper); margin-bottom:6px;}
+  .proc-row p{color:var(--chrome-dim); font-size:14.5px; max-width:560px;}
+
+  /* ---------- REVIEWS ---------- */
+  .reviews{border-bottom:1px solid var(--line);}
+  .reviews-shell{position:relative; margin-top:36px;}
+  .rev-track{
+    display:flex; gap:20px; overflow-x:auto; scroll-behavior:smooth;
+    scroll-snap-type:x mandatory; padding:4px 10px 12px; -ms-overflow-style:none;
+    scrollbar-width:none;
+  }
+  .rev-track::-webkit-scrollbar{display:none;}
+  .rev-card{
+    flex:0 0 min(360px, 82vw); scroll-snap-align:start;
+    border:1px solid var(--line); padding:24px; background:var(--gunmetal);
+  }
+  @media(min-width:900px){.rev-card{flex-basis:calc((100% - 40px)/3);}}
+  .stars{color:var(--amber); letter-spacing:2px; margin-bottom:12px; font-size:15px;}
+  .rev-card p{color:var(--chrome); font-size:14.5px; margin-bottom:14px;}
+  .rev-card footer{font-size:13px; color:var(--chrome-dim); font-weight:600;}
+  .reviews-nav{
+    position:absolute; top:50%; transform:translateY(-50%);
+    width:42px; height:42px; border-radius:50%; border:1px solid var(--line);
+    background:rgba(35,38,43,0.95); color:var(--paper); cursor:pointer;
+    display:flex; align-items:center; justify-content:center; z-index:2;
+    transition:transform 0.15s, border-color 0.15s, background 0.15s;
+  }
+  .reviews-nav:hover{border-color:var(--red-bright); background:var(--gunmetal-2);}
+  .reviews-prev{left:-10px;}
+  .reviews-next{right:-10px;}
+  .reviews-nav span{font-size:28px; line-height:1; margin-top:-2px;}
+  @media(max-width:860px){
+    .reviews-prev{left:-4px;}
+    .reviews-next{right:-4px;}
+  }
+
+  /* ---------- LOCATION ---------- */
+  .location{background:var(--gunmetal); border-bottom:1px solid var(--line);}
+  .loc-grid{display:grid; grid-template-columns:0.9fr 1.1fr; gap:40px; align-items:stretch;}
+  @media(max-width:860px){.loc-grid{grid-template-columns:1fr;}}
+  .loc-details p{color:var(--chrome); margin-bottom:10px; font-size:15px;}
+  .loc-details .addr{font-size:19px; color:var(--paper); font-family:'Oswald'; letter-spacing:0.01em; margin-bottom:18px;}
+  .hours-row{display:flex; justify-content:space-between; font-size:14px; padding:8px 0; border-bottom:1px dashed var(--line); color:var(--chrome-dim);}
+  .hours-row span:last-child{color:var(--paper);}
+  .map-frame{border:1px solid var(--line); min-height:320px; overflow:hidden;}
+  .map-frame iframe{width:100%; height:100%; min-height:320px; border:0;}
+
+  /* ---------- CONTACT ---------- */
+  .contact{text-align:center;}
+  .contact h2{max-width:600px; margin-left:auto; margin-right:auto;}
+  .contact p.lede{color:var(--chrome); max-width:480px; margin:0 auto 34px;}
+  .contact-buttons{display:flex; gap:16px; justify-content:center; flex-wrap:wrap;}
+  .contact-info{
+    max-width:640px; margin:0 auto 28px; padding:18px 20px;
+    border:1px solid var(--line); background:var(--gunmetal);
+  }
+  .contact-info p{font-size:14px; color:var(--chrome-dim); margin-bottom:8px;}
+  .contact-info a{color:var(--paper); font-weight:700; text-decoration:none;}
+  .contact-info a:hover{color:var(--red-bright);}
+  .social-row{margin-top:44px; display:flex; gap:18px; justify-content:center;}
+  .social-pill{
+    border:1px solid var(--line); padding:12px 22px; border-radius:2px;
+    font-size:13px; text-transform:uppercase; letter-spacing:0.05em; font-weight:600;
+    display:flex; align-items:center; gap:8px; text-decoration:none;
+    transition:border-color 0.2s, background 0.2s;
+  }
+  .social-pill:hover{border-color:var(--red-bright); background:var(--gunmetal);}
+
+  footer{
+    border-top:1px solid var(--line); padding:36px 0; text-align:center;
+    color:var(--chrome-dim); font-size:13px;
+  }
+  footer b{color:var(--paper);}
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <div class="logo">N R<span class="dot">•</span>AUTOMOBILES</div>
+    <ul id="navlinks">
+      <li><a href="#about">About</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#reviews">Reviews</a></li>
+      <li><a href="#location">Location</a></li>
+      <li><a href="#contact" class="nav-cta">Contact</a></li>
+    </ul>
+    <button class="burger" id="burgerBtn">☰</button>
+  </nav>
+</header>
+
+<section class="hero reveal in-view">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow">Chennai's Bullet Whisperer</div>
+      <h1>WE DON'T JUST<br>FIX <span>BULLETS.</span><br>WE UNDERSTAND<br>THEM.</h1>
+      <p class="lede">Run by Latifuddin — Royal Enfield specialist with 6 years turning tired thumpers into machines that actually sound right again.</p>
+      <div class="hero-ctas">
+        <a href="#contact" class="btn btn-primary">Book a Service →</a>
+        <a href="https://www.instagram.com/nr.automobiles/" target="_blank" class="btn btn-ghost">See the Work on IG</a>
+      </div>
+      <div class="stat-strip">
+        <div class="stat"><b>4.9★</b><span>Justdial Rating</span></div>
+        <div class="stat"><b>1000+</b><span>5-Star Reviews</span></div>
+        <div class="stat"><b>6 yrs</b><span>In Business</span></div>
+        <div class="stat"><b>100%</b><span>Bullet Focused</span></div>
+      </div>
+    </div>
+    <div class="dial-wrap">
+      <div class="dial-frame">
+        <img src="image.png" alt="N R Automobiles logo">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="about reveal" id="about">
+  <div class="wrap about-grid">
+    <div>
+      <div class="kicker">The Shop</div>
+      <h2>Family workshop.<br>Serious craft.</h2>
+    </div>
+    <div>
+      <p>N R Automobiles has been running out of Mount Road, Chennai since 2020 — six years of stripped engines, rebuilt gearboxes, and Bullets that came in limping and left thumping properly again.</p>
+      <p>At the center of it is Latifuddin, who specializes almost entirely in Royal Enfield Bullets — the older carbureted classics as much as the newer ones. Not a general garage that "also does bikes." A guy who's spent years learning exactly how this one machine breaks, and exactly how to put it back together right.</p>
+      <div class="cardline">
+        <b>Why people keep coming back</b>
+        <span>860+ ratings on Justdial, 4.9/5 average, and a Google listing sitting past 1000 five-star reviews. That's not luck — that's repeat riders sending their friends.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="services reveal" id="services">
+  <div class="wrap">
+    <div class="kicker">What We Handle</div>
+    <h2>Built around one engine family.</h2>
+    <div class="svc-grid">
+      <div class="svc">
+        <div class="num">01</div>
+        <h3>Full Engine Rebuilds</h3>
+        <p>Top-end and bottom-end work on classic and modern Bullet engines — done properly, not patched.</p>
+      </div>
+      <div class="svc">
+        <div class="num">02</div>
+        <h3>Routine Servicing</h3>
+        <p>Oil, valve clearance, carb tuning, electricals — the maintenance that keeps a Bullet from becoming a problem.</p>
+      </div>
+      <div class="svc">
+        <div class="num">03</div>
+        <h3>Restoration Work</h3>
+        <p>Old, neglected, or crash-damaged Bullets brought back to a rideable, reliable state.</p>
+      </div>
+      <div class="svc">
+        <div class="num">04</div>
+        <h3>Diagnostics</h3>
+        <p>Weird noise, rough idle, starting trouble — if it's a Bullet issue, chances are it's been seen before here.</p>
+      </div>
+      <div class="svc">
+        <div class="num">05</div>
+        <h3>Custom Touches</h3>
+        <p>Exhaust notes, small cosmetic changes, and setup tweaks riders ask for once the bike's actually running well.</p>
+      </div>
+      <div class="svc">
+        <div class="num">06</div>
+        <h3>Pre-Purchase Checks</h3>
+        <p>Buying a used Bullet? Get it inspected before you hand over cash, not after.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="reviews reveal" id="reviews">
+  <div class="wrap">
+    <div class="kicker">Word on the Street</div>
+    <h2>What riders actually say.</h2>
+    <p class="lede" style="max-width:560px;">Based on Google reviews: 5.0 from 1,015 reviews.</p>
+    <div class="reviews-shell">
+      <button class="reviews-nav reviews-prev" id="reviewsPrev" type="button" aria-label="Previous reviews"><span>‹</span></button>
+      <div class="rev-track" id="reviewTrack">
+        <div class="rev-card">
+          <div class="stars">★★★★★</div>
+          <p>My Royal Enfield had a pickup problem, and the team helped narrow down the real fault when others gave mixed answers.</p>
+          <footer>— MADHAN .R, Google review</footer>
+        </div>
+        <div class="rev-card">
+          <div class="stars">★★★★★</div>
+          <p>Amazing service and applause to the timing and effort.</p>
+          <footer>— WILD WOLF PRODUCTIONS, Google review</footer>
+        </div>
+        <div class="rev-card">
+          <div class="stars">★★★★★</div>
+          <p>Very good service.</p>
+          <footer>— Siva Ganesh, Google review</footer>
+        </div>
+        <div class="rev-card">
+          <div class="stars">★★★★★</div>
+          <p>Great work setting up the RE engine after traveling from Bangalore.</p>
+          <footer>— Swaris D, Google review</footer>
+        </div>
+        <div class="rev-card">
+          <div class="stars">★★★★★</div>
+          <p>Very thorough service, very clean and neat work, and honest pricing of parts and labor.</p>
+          <footer>— Junaid Ahmed, Google review</footer>
+        </div>
+        <div class="rev-card">
+          <div class="stars">★★★★★</div>
+          <p>Good service with affordable price. Highly talented person.</p>
+          <footer>— umesh kumar, Google review</footer>
+        </div>
+      </div>
+      <button class="reviews-nav reviews-next" id="reviewsNext" type="button" aria-label="Next reviews"><span>›</span></button>
+    </div>
+  </div>
+</section>
+
+<section class="location reveal" id="location">
+  <div class="wrap loc-grid">
+    <div class="loc-details">
+      <div class="kicker">Find Us</div>
+      <h2>Mount Road, Chennai</h2>
+      <p class="addr">No 21, Border Thottam,<br>Boobegum Street, Mount Road,<br>Chennai – 600002</p>
+      <div class="hours-row"><span>Mon – Sat</span><span>9:30 AM – 8:00 PM</span></div>
+      <div class="hours-row"><span>Sunday</span><span>Closed</span></div>
+      <div style="margin-top:24px;">
+        <a href="https://maps.app.goo.gl/gZYr7vXmGifyQUzc9" target="_blank" class="btn btn-ghost">Open in Google Maps →</a>
+      </div>
+    </div>
+    <div class="map-frame">
+      <iframe
+        src="https://www.google.com/maps?q=13.0625815,80.2682113&hl=en&z=16&output=embed"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+    </div>
+  </div>
+</section>
+
+<section class="contact reveal" id="contact">
+  <div class="wrap">
+    <div class="kicker" style="text-align:center;">Ready When You Are</div>
+    <h2>Bring the Bullet in.</h2>
+    <p class="lede">Call, WhatsApp, or message us directly to book service or ask about repairs.</p>
+    <div class="contact-info">
+      <p>Phone: <a href="tel:+919840192087">+91 9840192087</a></p>
+      <p>WhatsApp: <a href="https://wa.me/919840192087?text=Hi%20N%20R%20Automobiles%2C%20I%20want%20to%20book%20a%20service">Chat on WhatsApp</a></p>
+    </div>
+    <div class="contact-buttons">
+      <a href="https://wa.me/919840192087?text=Hi%20N%20R%20Automobiles%2C%20I%20want%20to%20book%20a%20service" target="_blank" class="btn btn-primary">WhatsApp Us →</a>
+      <a href="tel:+919840192087" class="btn btn-ghost">Call Now</a>
+      <a href="https://maps.app.goo.gl/gZYr7vXmGifyQUzc9" target="_blank" class="btn btn-ghost">Get Directions</a>
+    </div>
+    <div class="social-row">
+      <a href="https://www.instagram.com/nr.automobiles/" target="_blank" class="social-pill">Instagram</a>
+      <a href="https://www.youtube.com/@lateefuddin5269/shorts" target="_blank" class="social-pill">YouTube Shorts</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <b>N R Automobiles</b> — Mount Road, Chennai · Royal Enfield Bullet Specialists<br>
+    Est. 2020 · Run by Latifuddin
+  </div>
+</footer>
+
+<script>
+  const burger = document.getElementById('burgerBtn');
+  const navlinks = document.getElementById('navlinks');
+  burger.addEventListener('click', () => navlinks.classList.toggle('open'));
+  navlinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navlinks.classList.remove('open')));
+
+  const revealTargets = [
+    ...document.querySelectorAll('section.reveal'),
+    ...document.querySelectorAll('.svc, .proc-row, .rev-card, .stat, .cardline, .contact-info, .social-pill, .map-frame')
+  ];
+
+  revealTargets.forEach((element, index) => {
+    element.classList.add('reveal');
+    if (index % 3 === 1) element.classList.add('reveal-delay-1');
+    if (index % 3 === 2) element.classList.add('reveal-delay-2');
+    if (index % 3 === 0 && index > 0) element.classList.add('reveal-delay-3');
+  });
+
+  if ('IntersectionObserver' in window) {
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.16, rootMargin: '0px 0px -60px 0px' });
+
+    revealTargets.forEach((element) => {
+      if (!element.classList.contains('in-view')) {
+        revealObserver.observe(element);
+      }
+    });
+  } else {
+    revealTargets.forEach((element) => element.classList.add('in-view'));
+  }
+
+  const reviewTrack = document.getElementById('reviewTrack');
+  const reviewPrev = document.getElementById('reviewsPrev');
+  const reviewNext = document.getElementById('reviewsNext');
+
+  if (reviewTrack && reviewPrev && reviewNext) {
+    const scrollReviews = (direction) => {
+      const firstCard = reviewTrack.querySelector('.rev-card');
+      if (!firstCard) return;
+      const gap = 20;
+      const amount = firstCard.getBoundingClientRect().width + gap;
+      reviewTrack.scrollBy({ left: direction * amount, behavior: 'smooth' });
+    };
+
+    reviewPrev.addEventListener('click', () => scrollReviews(-1));
+    reviewNext.addEventListener('click', () => scrollReviews(1));
+  }
+</script>
+
+</body>
+</html>
